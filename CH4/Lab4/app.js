@@ -2,34 +2,67 @@
  * Created by Administrator on 9/30/2015.
  */
 var  _mysql = require('mysql');
+var http = require('http');
 
 var HOST = 'localhost';
-//var PORT = 8080;
+var PORT = 3306;
 var MYSQL_USER = 'root';
 var MYSQL_PASS = 'toor';
-var DATABASE = 'CSC443';
-var TABLE = 'Products';
+var DATABASE = 'test';
+var TABLE = 'csc443';
 
 var connection = _mysql.createConnection({
     host: HOST,
+    port :PORT,
     user: MYSQL_USER,
     password: MYSQL_PASS,
     database: DATABASE
 });
 
-//connection.connect();
+function handleIncomingRequests(request, response){
+    getPrice(request.url.replace("/", ""), function(err,data){
+        var result;
+        var httpcode = 200;
 
-connection.query('use ' + DATABASE);
-connection.query('insert into '+ TABLE +' (ID, price) values (24, 50.00)');
-
-connection.query('select id, price from ' + TABLE + ' where price < 12',
-    function(err, result, fields) {
-        if (err)
-            throw err;
-        else {
-            for (var i in result) {
-                var gadget = result[i];
-                console.log(TABLE.name +': '+ TABLE.price);
-            }
+        if (err) {
+            httpcode = 503;
+            result = {
+                error_code: 503,
+                message: "Product ID: " + request.url.replace("/", "") + " does not exist"
+            };
+        } else {
+            result = {
+                product_id: request.url.replace("/", ""),
+                price: data
+            };
         }
+        response.writeHead(httpcode, {"Content-Type": "application/json"});
+        response.end(JSON.stringify(result) + "\n");
     });
+}
+var s = http.createServer(handleIncomingRequests);
+s.listen(8080);
+
+
+connection.connect(function(err){
+    if(!err)
+        console.log("Database is connected..");
+    else
+        console.log("Error in connection...");
+});
+
+function getPrice(product_id, callback){
+    var get = {id:product_id};
+
+    connection.query('SELECT price FROM csc443 WHERE ID = ' +product_id, function(err, result, fields) {
+        if(!err){
+            if(result[0]!=null){
+                callback(null, result[0].price)
+            }
+            else
+                callback("Product was not found", null);
+        }
+        else
+            callback(err,null);
+    });
+}
