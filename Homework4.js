@@ -11,27 +11,28 @@ var items = [];
 var router = express.Router();
 router.use(bodyParser());
 
-router.route('/csc443')
-    .get(function(req, res, next){
+router.route('/')
+    .get(function (req, res, next) {
         res.send({
-            status:'Items found',
-            items:items
+            status: 'Items found',
+            items: items
         });
     })
-    .post(function(req, res, next){
+    .post(function (req, res, next) {
         items.push(req.body);
-
         res.send({
-            status:'Items Added',
-            items
+            status: 'Item added',
+            itemId: items.length - 1
         });
     })
-    .get(function(req, res, next){
-        res.send({
-            status:'Items found',
-            items:items
-        });
+    .put(function (req, res, next) {
+        items = req.body;
+        res.send({ status: 'Items replaced' });
     })
+    .delete(function (req, res, next) {
+        items = [];
+        res.send({ status: 'Items cleared' });
+    });
 
 var HOST = 'localhost';
 var PORT = 3306;

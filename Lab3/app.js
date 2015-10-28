@@ -1,8 +1,12 @@
-/**
- * Created by Administrator on 9/30/2015.
- */
 var  _mysql = require('mysql');
 var http = require('http');
+var express = require('express');
+var bodyparser = require('body-parser');
+
+var items = [];
+
+var router = express.Router();
+router.use(bodyParser());
 
 var HOST = 'localhost';
 var PORT = 3306;
@@ -18,6 +22,15 @@ var connection = _mysql.createConnection({
     password: MYSQL_PASS,
     database: DATABASE
 });
+
+var pool = _mysql.createPool({
+    host: HOST,
+    port :PORT,
+    user: MYSQL_USER,
+    password: MYSQL_PASS,
+    database: DATABASE
+});
+
 
 function handleIncomingRequests(request, response){
     getPrice(request.url.replace("/", ""), function(err,data){
@@ -43,7 +56,6 @@ function handleIncomingRequests(request, response){
 var s = http.createServer(handleIncomingRequests);
 s.listen(8080);
 
-
 connection.connect(function(err){
     if(!err)
         console.log("Database is connected..");
@@ -52,17 +64,20 @@ connection.connect(function(err){
 });
 
 function getPrice(product_id, callback){
-    var get = {id:product_id};
+    var get = {id: product_id};
+    pool.getConnection(function (err, connection) {
 
-    connection.query('SELECT price FROM csc443 WHERE ID = ' +product_id, function(err, result, fields) {
-        if(!err){
-            if(result[0]!=null){
-                callback(null, result[0].price)
+        connection.query('select price from csc443 where ?', get, function (err, result) {
+
+            if (!err) {
+                if (result[0] != null) {
+                    callback(null, result[0].price)
+                }
+                else
+                    callback("Product was not found", null);
             }
             else
-                callback("Product was not found", null);
-        }
-        else
-            callback(err,null);
+                callback(err, null);
+        })
     });
 }
