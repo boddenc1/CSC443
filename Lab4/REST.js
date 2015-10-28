@@ -70,12 +70,9 @@ router.route('/:id')
         var id = req.params['id'];
         if (id && items[Number(id)]) {
             pool.getConnection(function (err, connection) {
-                connection.query('select price from csc443 where ?', get, function (err, result) {
-                    if (!err) {
-                        if (result[0] != null) {
-                            res.send(result[0].price);
-                        }
-                    }
+                connection.query('select price from csc443 where ?', id, function (err, result) {
+                    if (!err)
+                        res.send(result[0].price);
                     else
                         res.send("No product was found!");
                 })
@@ -89,7 +86,17 @@ router.route('/:id')
 
     })
     .delete(function (req, res, next) {
-
+        var id = req.params['id'];
+        if (id && items[Number(id)]) {
+            pool.getConnection(function (err, connection) {
+                connection.query('DELETE from 'TABLE' where product_id= ?', id, function (err, result) {
+                    if (!err)
+                        res.send(result[0].price);
+                    else
+                        res.send("No product was found!");
+                })
+            });
+        }
     })
 
     .all(function (req, res, next) {
