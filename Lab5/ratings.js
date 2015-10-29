@@ -1,7 +1,6 @@
 /**
- * Created by Ben on 10/26/2015.
+ * Created by Administrator on 10/29/2015.
  */
-
 var db = require('./db.js');
 
 var getRating = function getRating(product_id, callback) {
@@ -143,11 +142,9 @@ var deleteRating = function deleteRating(data, callback)
                 //release
                 connection.release();
             });
-
         });
     }
 }
-
 
 module.exports.getRating = getRating;
 module.exports.deleteRating = deleteRating;

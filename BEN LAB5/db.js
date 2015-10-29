@@ -9,7 +9,7 @@ var pool = mysql.createPool({
     user: 'root',
     port: 3306,
     password: 'toor',
-    database: 'csc443'
+    database: 'test'
 });
 
 module.exports.pool = pool;
