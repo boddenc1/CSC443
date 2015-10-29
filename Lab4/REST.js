@@ -83,22 +83,20 @@ router.route('/:id')
 
     })
     .put(function (req, res, next) {
-
     })
     .delete(function (req, res, next) {
         var id = req.params['id'];
         if (id && items[Number(id)]) {
             pool.getConnection(function (err, connection) {
-                connection.query('DELETE from 'TABLE' where product_id= ?', id, function (err, result) {
+                connection.query('DELETE from csc443 where product_id= ?', id, function (err, result) {
                     if (!err)
-                        res.send(result[0].price);
+                        res.send("Product deleted!");
                     else
                         res.send("No product was found!");
                 })
             });
         }
     })
-
     .all(function (req, res, next) {
         res.send(501, {status: 'Not implemented'});
     });
