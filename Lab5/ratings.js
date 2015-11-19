@@ -21,6 +21,7 @@ var getRating = function getRating(product_id, callback) {
             connection.query(sql, get, function (err, results) {
                 if (!err) {
                     if (results[0] != null) {
+                        console.log(results)
                         dbCache.set(sql+product_id, results, 10000 );
                         callback(null, results);
                     } else {
