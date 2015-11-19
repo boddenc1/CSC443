@@ -2,19 +2,21 @@
  * Created by Administrator on 10/29/2015.
  */
 var db = require('./db.js');
+var nodeCache = new require('node-cache');
+var dbCache = new nodeCache();
 
 var getRating = function getRating(product_id, callback) {
     var get = {product_id: product_id};
     db.pool.getConnection(function (err, connection) {
         // Use the connection
-        //connection.query('SELECT * FROM PRODUCTS WHERE ?', get, function (err, results) {
+        connection.query('SELECT * FROM PRODUCTS WHERE ?', get, function (err, results) {
         //connection.query('SELECT CAST(AVG(rating) AS DECIMAL(3,2)) FROM csc443.ratings WHERE ?', get, function (err, results) {
-        connection.query('SELECT test.products.id, test.products.name, ' +
-            'CAST(AVG(test.ratings.rating) AS decimal(3,2)) AS \'Rating\'' +
-            'FROM test.ratings ' +
-            'LEFT JOIN test.products ' +
-            'ON test.ratings.product_id = test.products.id ' +
-            'WHERE ?', get, function (err, results) {
+        //connection.query('SELECT test.products.id, test.products.name, ' +
+         //   'CAST(AVG(test.ratings.rating) AS decimal(3,2)) AS \'Rating\'' +
+          ///  'FROM test.ratings ' +
+          //  'LEFT JOIN test.products ' +
+           // 'ON test.ratings.product_id = test.products.id ' +
+            //'WHERE ?', get, function (err, results) {
             if (!err) {
                 if (results[0].id != null) {
                     callback(null, results);

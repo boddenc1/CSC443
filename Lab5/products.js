@@ -1,8 +1,3 @@
-/**
- * Created by Vico on 10/20/2015.
- * Updated Ben 10/26/15
- */
-
 var db = require('./db.js');
 
 var getProduct = function getProduct(product_id, callback) {
