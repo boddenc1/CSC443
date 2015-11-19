@@ -1,4 +1,4 @@
-var db = require('./db.js');
+var db = require('./dbInfo.js');
 
 var getProduct = function getProduct(product_id, callback) {
 

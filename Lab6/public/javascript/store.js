@@ -1,11 +1,9 @@
-/**
- * Created by Vico on 11/4/2015.
- */
+
 function Products($scope, $http) {
     $http.get('http://127.0.0.1:8080/api/products').success(function (data) {
         if (data) {
             data.items.forEach(function (item) {
-                item.rating = 3;  //Hard coding the rating in this model.  Will fetch rating from service later
+                $http.get('http://127.0.0.1:8080/api/rating')
             });
             $scope.items = data.items;
             $scope.status = data.status;
@@ -14,16 +12,7 @@ function Products($scope, $http) {
             $scope.status = "Something bad happened.";
         }
     });
-
 }
 function HeartBeat($scope, $http) {
-    $http.get('http://127.0.0.1:8080/api').success(function (data) {
-        if (data) {
-            $scope.status = data.message;
-        }
-        else {
-            $scope.status = "Something bad happened.";
-        }
-    });
-
+    $scope.message = "Hi there! The time is-> " + new Date().toJSON();
 }

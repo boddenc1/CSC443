@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 10/29/2015.
  */
-var mysql = require('mysql');
+var _mysql = require('mysql');
 
 var HOST = 'localhost';
 var PORT = 3306;

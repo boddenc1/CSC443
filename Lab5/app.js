@@ -10,15 +10,17 @@
 //Rest HTTP stuff
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 //DB Products
-var dbProducts = require('./dbProducts.js');
-var dbRatings = require('./dbRatings.js');
+var dbProducts = require('./products.js');
+var dbRatings = require('./ratings.js');
 
 var app = express();
 
 // configure body parser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors());
 
 var port = process.env.PORT || 8080; // set our port
 
