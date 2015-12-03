@@ -98,7 +98,20 @@ router.route('/products/:product_id')
                 res.json(404, {status: err});
             }
         });
+    })//DEL localhost:8080/api/products/
+    .delete(function (req, res) {
+        dbProducts.deleteProduct(function (err, data) {
+            if (data) {
+                res.json({
+                    status: '200'
+                });
+            }
+            else {
+                res.json(404, {status: err});
+            }
+        });
     })
+
     //DEL localhost:8080/api/products/1
     .delete(function (req, res) {
         dbProducts.deleteProduct(req.params['product_id'], function (err, data) {

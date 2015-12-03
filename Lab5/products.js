@@ -22,12 +22,12 @@ var getProduct = function getProduct(product_id, callback) {
     });
 }
 
-var deleteProduct = function deleteProduct(product_id, callback) {
+var deleteProduct = function deleteProduct(callback) {
 
-    var get = {id: product_id};
+    //var get = {id: product_id};
     db.pool.getConnection(function (err, connection) {
         // Use the connection
-        connection.query('DELETE FROM PRODUCTS WHERE ?', get, function (err, results) {
+        connection.query('Truncate Products',function (err, results) {
             if (!err) {
                 if (results != null) {
                     callback(null, results);
