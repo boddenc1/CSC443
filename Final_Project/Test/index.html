@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+
+<body>
+<div ng-app="myApp" ng-controller="ctrl">
+    <ul>
+        <li ng-repeat="x in record">
+            {{ x.city }}
+        </li>
+    </ul>
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('ctrl', function ($scope, $http) {
+        $http.get("https://data.cityofchicago.org/resource/alternative-fuel-locations.json")
+                .then(function (response) {
+                    $scope.record = response.data;});
+    });
+</script>
+
+</body>
+</html>

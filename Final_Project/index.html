@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<title>City of Chicago Data</title>
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="../bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#"> Data from the City of Chicago</a>
+        </div>
+
+        <div> id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height:1px;">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br><br>
+
+<div class="container" ng-app="">
+    <p>Button Test:
+        <button type="button" class="btn btn-sm btn-primary">Primary</button>
+    </p>
+    <p>Name: <input type="text" ng-model="name"></p>
+
+    <p ng-bind="name"></p>
+</div>
+
+</body>
+</html>
