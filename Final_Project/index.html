@@ -30,14 +30,30 @@
 </nav>
 <br><br><br>
 
-<div class="container" ng-app="">
-    <p>Button Test:
-        <button type="button" class="btn btn-sm btn-primary">Primary</button>
-    </p>
-    <p>Name: <input type="text" ng-model="name"></p>
+<div class="container" ng-app="myApp" ng-controller="ctrl">
 
-    <p ng-bind="name"></p>
+    <p>Here is list of records from the database consisting of the Id, State, City, Zip Code and Street Address.</p>
+
+    <ul>
+        <li ng-repeat="x in record">
+            {{ x.id + ', ' + x.state + ', ' + x.city + ', ' + x.zip + ', ' + x.station_name + ', '+ x.street_address }}
+        </li>
+    </ul>
 </div>
+
+<script>
+
+    //console.log({{ctrl.user.id}});
+
+    var link ="https://data.cityofchicago.org/resource/alternative-fuel-locations.json?";
+    var app = angular.module('myApp', []);
+
+    app.controller('ctrl', function ($scope, $http) {
+        $http.get(link)
+                .then(function (response) {
+                    $scope.record = response.data;});
+    });
+</script>
 
 </body>
 </html>
